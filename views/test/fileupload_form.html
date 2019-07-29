@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <% include ../inc/head %>
+    <script type="text/javascript">
+    </script>
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>파일 업로드 테스트</h1>
+    <form action="/test/fileupload_multi" method="post"enctype="multipart/form-data">
+    <input type="file" name="photos" id="" multiple>
+    <input type="submit" value="업로드">
+    </form>
+</body>
+
+</html>

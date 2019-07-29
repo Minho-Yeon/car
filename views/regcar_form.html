@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <% include ./inc/head %>
+    <script type="text/javascript">
+        function logon() {
+            $(".useroff").hide();
+            $('.useron').show();
+        }
+        $(document).ready(function () {
+
+            $("#carname").focus();
+
+            $("#register").on('click', function () {
+                $.ajax({
+                    type: 'get',
+                    url: '/regcar',
+                    data: {
+                        carname: $("#carname").val(),
+                        brand: $("#brand").val(),
+                        year: $("#year").val(),
+                        distance: $("#distance").val(),
+                        price: $("#price").val()
+                    },
+                    success: function (data) {
+                        
+                            alert(data.msg);
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+            });
+        });
+    </script>
+    <title>Homepage</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .index {
+            width: 100px;
+            height: 50px;
+        }
+
+        #regcar {
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+<body>
+    <% include ./inc/body %>
+    <div style="float: right">
+        <button class="useron" style="display:none;" onclick="location.href='/logout'">로그아웃</button>
+        <button class="useroff" onclick="location.href='/login_form'">로그인</button>
+        <button class="useroff" onclick="location.href='/signin_form'">회원가입</button>
+        <%if(locals.user.userid){%>
+        <%= user.userid%>로 로그인 중..
+        <script>logon();</script>
+        <%}%>
+            </div>
+            <div style="float: left">
+                    <button class="index" onclick="location.href='/carhistory'" >차의 역사</button>
+                    <button class="index"onclick="location.href='/carinfo'" >차 정보</button>
+                    <button class="index"onclick="location.href='/regcar_form'" >차 등록</button>
+                    <button class="index"onclick="location.href='/carlist'" >차 리스트</button>
+                    
+            </div>
+    
+    <div id="regcar">
+
+        <h2>중고 차 등록</h2>
+
+        <input type="text" name="carname" id="carname" placeholder="carname"> 차종<br><br>
+        <input type="text" name="brand" id="brand" placeholder="brandname"> 브랜드명<br><br>
+        <input type="text" name="year" id="year" placeholder="year"> 제작년도<br><br>
+        <input type="text" name="distance" id="distance" placeholder="distance"> 주행거리<br><br>
+        <input type="text" name="price" id="price" placeholder="price"> 가격<br><br>
+        <button id="register">차 등록하기</button>
+    </div>
+</body>
+
+</html>

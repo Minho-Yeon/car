@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script> -->
+    <% include ../inc/head %>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajax({
+                type: 'get',
+                url: '/api/carlist',
+                success: function (data) {
+                    $.each(data.cars, (i, item) => {
+                        $("#table").append("<tr><td>" + (i + 1) + "</td><td>" + item.carname + "</td><td>" + item.brand + "</td><td>" + item.year + "</td><td>" + item.distance + "</td><td>" + item.price + "</td></tr>");
+                    });
+                }
+            });
+
+        });
+        function logon() {
+            $(".useroff").hide();
+            $('.useron').show();
+        }
+
+        function search() {
+            $.ajax({
+                type: 'get',
+                url: '/search/carlist',
+                data: {
+                    'kind': $('#kind').val(),
+                    'search': $('#search').val()
+                },
+                success: function (data) {
+                    $('#search').val("");
+                    $('#table').empty();
+                    $("#table").append("<tr><th>No</th><th>차종</th><th>브랜드</th><th>제작년도</th><th>주행거리</th><th>가격</th></tr>");
+                    $.each(data.cars, (i, item) => {
+                        $("#table").append("<tr><td>" + (i + 1) + "</td><td>" + item.carname + "</td><td>" + item.brand + "</td><td>" + item.year + "</td><td>" + item.distance + "</td><td>" + item.price + "</td></tr>");
+                    });
+                }
+            });
+        }
+        function input() {
+            if (window.event.keyCode == 13) {
+
+                // 엔터키가 눌렸을 때 실행할 내용
+                search();
+            }
+        }
+
+        // function searchbrand() {
+        //     $.ajax({
+        //         type: 'get',
+        //         url: '/search/brand',
+        //         data: { 'search': $('#searchbrand').val() },
+        //         success: function (data) {
+        //             $('#searchbrand').val("");
+        //             $('#table').empty();
+        //             $("#table").append("<tr><th>No</th><th>차종</th><th>브랜드</th><th>제작년도</th><th>주행거리</th><th>가격</th></tr>");
+        //             $.each(data.cars, (i, item) => {
+        //                 $("#table").append("<tr><td>" + (i + 1) + "</td><td>" + item.carname + "</td><td>" + item.brand + "</td><td>" + item.year + "</td><td>" + item.distance + "</td><td>" + item.price + "</td></tr>");
+        //             });
+        //         }
+        //     });
+        // }
+        // function input2() {
+        //     if (window.event.keyCode == 13) {
+
+        //         // 엔터키가 눌렸을 때 실행할 내용
+        //         searchbrand();
+        //     }
+        // }
+
+    </script>
+    <title>Homepage</title>
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <!-- <a class="navbar-brand" href="#">Start Bootstrap</a> -->
+            <i class="navbar-brand fas fa-home" style="font-size:200%;" onclick="location.href='/'"></i>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto login">
+                    <%#if(locals.user.userid){%>
+                    <!-- <li class="nav-item"><a class="nav-link logname" href="/logout"><%= user.userid%>님</a></li> -->
+                    <%#}%>
+                    <li class="nav-item useron log">
+                        <a class="nav-link logname" href="/logout">로그아웃</a>
+                    </li>
+                    <li class="nav-item useroff log">
+                        <a class="nav-link logname" href="/login_form">로그인</a>
+                    </li>
+                    <li class="nav-item useroff log">
+                        <a class="nav-link logname" href="/signin_form">회원가입</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <% include ../inc/body %>
+
+    <%if(locals.user.userid){%>
+    <script>
+        // $("ul.login").prepend("<li class='log'>|</li>");
+        $("ul.login").prepend(`<li class="nav-item"><a class="nav-link logname" href="/logout"><%= user.userid%>님</a></li>`);
+        logon();
+    </script>
+    <%}else{%>
+    <script>$(".useron").hide();</script>
+    <%}%>
+        
+    <div class="container">
+    
+        <div class="row">
+    
+            <div class="col-lg-3">
+    
+                <h1 class="my-4">중고차 판매 사이트</h1>
+                <div class="list-group">
+                    <a href="/" class="list-group-item">중고차 목록</a>
+                    <a href="/regcar_form" class="list-group-item">중고차 판매하기</a>
+                    <!-- <a href="#" class="list-group-item">Category 3</a> -->
+                </div>
+    
+            </div>
+        </div>
+    </div>
+                        <div>
+                        
+                            <h2>중고차 판매 목록</h2>
+
+
+            <table id="table">
+                <tr><th>No</th><th>차종</th><th>브랜드</th><th>제작년도</th><th>주행거리</th><th>가격</th></tr>
+                
+        <%# for(var i in carlist){%>
+    <!-- <tr>
+            <td><%#= i+1%></td>
+            <td><%#= carlist[i].carname%></td>
+            <td><%#= carlist[i].brand%></td>
+            <td><%#= carlist[i].year%></td>
+            <td><%#= carlist[i].distance%></td>
+            <td><%#= carlist[i].price%></td>
+        </tr> -->
+    <%#}%>
+    </table><br>
+    <select id="kind" name="kind">
+        <option value="carname">차종</option>
+        <option value="brand">브랜드</option>
+        <option value="distance">주행거리</option>
+        <option value="price">가격</option>
+    </select>
+    <input type="text" onkeyup="input()" name="search" id="search"><button onclick="search()">검색</button><br>
+    <!-- <input type="text" onkeyup="input2()" name="searchbrand" id="searchbrand"><button onclick="searchbrand()">브랜드
+            검색</button> -->
+    </div>
+</body>
+
+</html>

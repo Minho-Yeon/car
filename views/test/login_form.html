@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script> -->
+    <% include ../inc/head %>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#id").focus();
+
+        });
+    </script>
+
+    <style>
+        body {
+            text-align: center;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <% include ../inc/body %>
+    <div>
+    <h2>로그인</h2>
+    <% if(locals.msg){%>
+        <div><%= msg%></div>
+    <% }%>
+    <form action="/login" method="POST">
+        <div style="margin-top: 50px">
+        <input type="text" name="id" id="id" placeholder="ID"><br>
+        <input type="text" name="password" id="password" placeholder="Password"><br>
+        <input type="submit" id="login" value="로그인"><button type="button" onclick="location.href='/signin_form'">회원 가입</button>
+        </div>
+    </form>
+</div>
+</body>
+
+</html>

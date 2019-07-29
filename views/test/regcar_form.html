@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <% include ../inc/head %>
+    <script type="text/javascript">
+        function logon() {
+            $(".useroff").hide();
+            $('.useron').show();
+        }
+        $(document).ready(function () {
+
+            $("#carname").focus();
+
+            $("#register").on('click', function () {
+                $.ajax({
+                    type: 'get',
+                    url: '/regcar',
+                    data: {
+                        carname: $("#carname").val(),
+                        brand: $("#brand").val(),
+                        year: $("#year").val(),
+                        distance: $("#distance").val(),
+                        price: $("#price").val()
+                    },
+                    success: function (data) {
+
+                        alert(data.msg);
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+            });
+        });
+    </script>
+    <title>Homepage</title>
+
+
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <!-- <a class="navbar-brand" href="#">Start Bootstrap</a> -->
+            <i class="navbar-brand fas fa-home" style="font-size:200%;" onclick="location.href='/'"></i>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto login">
+                    <%#if(locals.user.userid){%>
+                    <!-- <li class="nav-item"><a class="nav-link logname" href="/logout"><%= user.userid%>님</a></li> -->
+                    <%#}%>
+                    <li class="nav-item useron log">
+                        <a class="nav-link logname" href="/logout">로그아웃</a>
+                    </li>
+                    <li class="nav-item useroff log">
+                        <a class="nav-link logname" href="/login_form">로그인</a>
+                    </li>
+                    <li class="nav-item useroff log">
+                        <a class="nav-link logname" href="/signin_form">회원가입</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <% include ../inc/body %>
+
+    <%if(locals.user.userid){%>
+    <script>
+        // $("ul.login").prepend("<li class='log'>|</li>");
+        $("ul.login").prepend(`<li class="nav-item"><a class="nav-link logname" href="/logout"><%= user.userid%>님</a></li>`);
+        logon();
+    </script>
+    <%}else{%>
+    <script>$(".useron").hide();</script>
+    <%}%>
+            
+        <div class="container">
+        
+            <div class="row">
+        
+                <div class="col-lg-3">
+                    <h1 class="my-4">중고차 판매 사이트</h1>
+                    <div class="list-group">
+                        <a href="/" class="list-group-item">중고차 목록</a>
+                        <a href="/regcar_form" class="list-group-item">중고차 판매하기</a>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-9">
+                    <div class="row mt-5">
+                        <div class="col-lg-9 col-md-6 mb-4">
+                            <h2 class="mb-3 font-weight-bold text-center">중고 차 등록</h2>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text col-lg-2">차종</span>
+                                <input type="text" class="form-control" id="carname" placeholder="Carname">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text col-lg-2">브랜드명</span>
+                                <input type="text" class="form-control" id="brand" placeholder="Brandname">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text col-lg-2">제작년도</span>
+                                <input type="text" class="form-control" id="year" placeholder="Year">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text col-lg-2">주행거리</span>
+                                <input type="text" class="form-control" id="distance" placeholder="Distance">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text col-lg-2">가격</span>
+                                <input type="text" class="form-control" id="price" placeholder="Price">
+                            </div>                           
+                            <form class="mb-3 text-right" action="/test/fileupload" method="POST" enctype="multipart/form-data">
+                                <input class="form-control-file border" type="file" name="photo" />
+                                <input class="btn btn-info" type="submit" value="메인 사진 업로드" />
+                            </form>
+                            <form class="mb-3 text-right" action="/test/fileupload_multi" method="POST" enctype="multipart/form-data">
+                                <input class="form-control-file border" type="file" name="photos" multiple />
+                                <input class="btn btn-info" type="submit" value="그 외 사진 업로드" />
+                            </form> 
+                            <div class=" text-center">
+                                <button class="btn btn-success col-lg-6" type="button" id="register">등록하기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+</body>
+
+</html>

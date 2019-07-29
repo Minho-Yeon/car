@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script> -->
+    <% include ./inc/head %>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#id").focus();
+
+        });
+    </script>
+
+    <style>
+        *{
+            box-sizing: content-box;
+        }
+        body{
+            text-align: center;
+        }
+        #home_logo{
+            margin-left:200px;
+            margin-top:100px;
+            
+        }
+        hr.log{
+            margin:10px 200px;
+
+        }
+        h2{
+            position: relative;
+            margin-top: -50px;
+            /* width: fit-content; */
+            pointer-events: none;
+        }
+        input.login{
+            width:200px;
+            height: 30px;
+            margin: 10px auto;
+            padding: 0 0;
+            border-radius:10px; 
+            display: block;
+        }
+        #login{
+            cursor: pointer;
+            /* border */
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <% include ./inc/body %>
+    <h2>로그인</h2>
+    <hr class="log">
+    <div>
+    <% if(locals.msg){%>
+        <div><%= msg%></div>
+    <% }%>
+    <form action="/login" method="POST">
+        <div class="log_form">
+        <input class="login" type="text" name="id" id="id" placeholder="ID">
+        <input class="login" type="text" name="password" id="password" placeholder="Password">
+        <input class="login btn btn-primary" type="submit" id="login" value="로그인">
+        <button type="button" onclick="location.href='/signin_form'">회원 가입</button>
+        </div>
+    </form>
+</div>
+</body>
+
+</html>

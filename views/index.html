@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
+
+    <% include ./inc/head %>
+
+    <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>\ -->
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        });
+        function logon() {
+            $(".useroff").hide();
+            $('.useron').show();
+        }
+
+    </script>
+    <title>Homepage</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        .list{
+            display: inline;
+            padding: 10px 30px;
+        }
+        .log{
+            display: inline;
+            padding: 0px 10px;
+        }
+        .login{
+            display: block;
+            text-align:right;
+        }
+        .menuname{
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: bold;
+                      
+        }
+        
+        a.menuname:link{ color:black;text-decoration: none; }
+        a.menuname:visited { color:black; text-decoration: none; }
+        a.menuname:hover{ color:dodgerblue;text-decoration: none;}
+        a.menuname:active { color: dodgerblue; text-decoration: none;}
+        
+        a.logname:link{color:black;text-decoration: none;}
+        a.logname:visited{color:black;text-decoration:none;}
+        a.logname:hover{color:black;text-decoration: underline;}
+        a.logname:active{color:black;text-decoration: underline;}
+
+      </style>
+
+
+</head>
+
+<body>
+
+    
+    <div class="login">
+        <ul class="login">
+                <li class="useron log"><a class="logname" href="/logout">로그아웃</a></li>
+                <li class="useroff log"><a class="logname" href="/login_form">로그인</a></li>
+                <li class="useroff log">|</li>
+                <li class="useroff log"><a class="logname" href="/signin_form">회원가입</a></li>
+        </ul>
+        <%if(locals.user.userid){%>
+            <script>
+                $("ul.login").prepend("<li class='log'>|</li>");
+                $("ul.login").prepend("<li class='log'><%= user.userid%>로 로그인 중..</li>");
+                logon();
+            </script>
+        <%}else{%>
+            <script>$(".useron").hide();</script>
+        <%}%>
+        </div>
+        <hr>
+        <% include ./inc/body %>
+        <hr>
+        <div>
+            <ul class="menu">
+                <li class="list"><a class="menuname" href="/carhistory">차의 역사</a></li>
+                <li class="list">|</li>
+                <li class="list"><a class="menuname" href="/carinfo">차 정보</a></li>
+                <li class="list">|</li>
+                <li class="list"><a class="menuname" href="/regcar_form">중고차 등록</a></li>
+                <li class="list">|</li>
+                <li class="list"><a class="menuname" href="/carlist">중고차 리스트</a></li>
+            </ul>                
+        </div>
+   
+    </body>
+</html>

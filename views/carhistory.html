@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script> -->
+    <% include ./inc/head %>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        });
+        function logon() {
+            $(".useroff").hide();
+            $('.useron').show();
+        }
+    </script>
+    <title>Homepage</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .index {
+            width: 100px;
+            height: 50px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <% include ./inc/body %>
+    <div style="float: right">
+        <button class="useron" style="display:none;" onclick="location.href='/logout'">로그아웃</button>
+        <button class="useroff" onclick="location.href='/login_form'">로그인</button>
+        <button class="useroff" onclick="location.href='/signin_form'">회원가입</button>
+        <%if(locals.user.userid){%>
+        <%= user.userid%>로 로그인 중..
+        <script>
+            logon();
+        </script>
+        <%}%>
+                </div>
+                <div style="float: left">
+                        <button class="index" onclick="location.href='/carhistory'" >차의 역사</button>
+                        <button class="index"onclick="location.href='/carinfo'" >차 정보</button>
+                        <button class="index"onclick="location.href='/regcar_form'" >차 등록</button>
+                        <button class="index"onclick="location.href='/carlist'" >차 리스트</button>
+                        
+                </div>
+        <div>
+            <h2>carhistory</h2>
+        </div>
+    </body>
+</html>

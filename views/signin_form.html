@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script> -->
+    <% include ./inc/head %>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#id").focus();
+        });
+    </script>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        .signin {
+            width: fit-content;
+            margin: 0px auto;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <% include ./inc/body %>
+    <h2>회원 가입</h2>
+    <form class="form1" action="/signin" method="post">
+        <div class="signin">
+            생성할 ID <input type="text" name="id" id="id" placeholder="ID"><br><br>
+            비밀번호 설정 <input type="text" name="password" id="password" placeholder="Password"><br><br>
+            사용자 이름 <input type="text" name="name" id="name" placeholder="이름"><br><br>
+            사용자 이메일 <input type="email" name="email" id="email" placeholder="E-mail Address"><br><br>
+            사용자 주소 <input type="text" name="address" id="address" placeholder="Address"><br><br>
+            <input type="submit" value="가입하기">
+        </div>
+    </form>
+</body>
+
+</html>
